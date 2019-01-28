@@ -1,6 +1,6 @@
 package json
 
-case class ContactResponseData(id:String,name:String,user_id:String)
+case class ContactResponseData(id:String,name:String,user_id:String,users:Array[String])
 case class ContactResponse(data:ContactResponseData,code:Int)
 
 case class ContactResponseErrorData(errors:List[String])

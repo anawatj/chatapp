@@ -7,8 +7,8 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
-import repositories.UserRepositoryImpl
-import services.UserService
+import repositories.{ContactItemRepositoryImpl, ContactRepositoryImpl, UserRepositoryImpl}
+import services.{ContactService, UserService}
 import utils.{PasswordUtils, UUIDUtils}
 
 import scala.concurrent.Future
@@ -21,11 +21,14 @@ object MainApp  {
 
   def main(args:Array[String])={
     val userRepository = new UserRepositoryImpl
+    val contactRepository = new ContactRepositoryImpl
+    val contactItemRepository = new ContactItemRepositoryImpl
     val uuidUtil = new UUIDUtils
     val passwordUtil =new PasswordUtils
     val userService = new UserService(userRepository,uuidUtil,passwordUtil)
+    val contactService = new ContactService(contactRepository,contactItemRepository,uuidUtil)
     val userRoute = new UserRoute(userService)
-    val contactRoute = new ContactRoute
+    val contactRoute = new ContactRoute(contactService)
     val route = pathPrefix("api"/"v1"){
       contactRoute.route ~
       userRoute.route

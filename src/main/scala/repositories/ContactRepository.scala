@@ -1,15 +1,23 @@
 package repositories
 
+import databases.MySqlComponent
+import mappings.ContactTable
 import models.Contact
+
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait ContactRepository extends BaseRepository[Contact]{
+
+    def findByName(name:String):Future[Option[Contact]]
 }
-class ContactRepositoryImpl extends ContactRepository{
+class ContactRepositoryImpl extends ContactRepository with ContactTable with MySqlComponent{
+  import profile.api._
   override def add(data: Contact): Future[Contact] = {
-    null
+    db.run(Contacts+=data) map {
+      _ => data
+    }
   }
 
   override def bulkAdd(list: List[Contact]): Future[List[Contact]] = {
@@ -31,5 +39,11 @@ class ContactRepositoryImpl extends ContactRepository{
 
   override def update(data: Contact, id: String): Future[Contact] = {
     null
+  }
+
+  override def findByName(name: String): Future[Option[Contact]] = {
+    db.run(Contacts.filter(c=>c.name===name).result.headOption) map {
+      c=>c
+    }
   }
 }
