@@ -10,8 +10,6 @@ import akka.http.scaladsl.model.StatusCodes
 import json._
 import json.JsonFormat._
 import services.ContactService
-
-import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 class ContactRoute(contactService: ContactService)(implicit actorSystem: ActorSystem, actorMaterializer: ActorMaterializer) {

@@ -26,11 +26,11 @@ class ContactService(contactRepository: ContactRepository,contactItemRepository:
       for{
         contactItemsDb<-contactItemRepository.getByContact(id)
 
-        contactItemsSave<- Future.successful(contactRequest.users.diff(contactItemsDb.map(c=>c.user_id)).map(user_id=>ContactItem(0,contact.id,user_id)))
+        contactItems<- Future.successful(contactRequest.users.diff(contactItemsDb.map(c=>c.user_id)).map(user_id=>ContactItem(0,contact.id,user_id)))
 
-        contactItemsRet<- contactItemRepository.bulkAdd(contactItemsSave.toList)
+        contactItemsRet<- contactItemRepository.bulkAdd(contactItems.toList)
       } yield {
-        Right(ContactResponse(ContactResponseData(contact.id,contact.name,contact.user_id,contactItemsRet.map(ci=>ci.user_id).toArray),StatusCodes.OK.intValue))
+        Right(ContactResponse(ContactResponseData(contact.id,contact.name,contact.user_id,contactItems.map(ci=>ci.user_id)),StatusCodes.OK.intValue))
       }
     }
 
@@ -44,7 +44,7 @@ class ContactService(contactRepository: ContactRepository,contactItemRepository:
         })
         contactItemsDb <- contactItemRepository.bulkAdd(contactItems.toList)
       } yield {
-        Right(ContactResponse(ContactResponseData(contactDb.id, contactDb.name, contactDb.user_id, contactItemsDb.map(ci => ci.user_id).toArray), StatusCodes.Created.intValue))
+        Right(ContactResponse(ContactResponseData(contactDb.id, contactDb.name, contactDb.user_id, contactItemsDb.map(ci => ci.user_id).toSeq), StatusCodes.Created.intValue))
 
       }
 
