@@ -1,7 +1,7 @@
 package mappings
 
 import databases.DatabaseComponent
-import models.{Conversation, ConversationType, ConversationUser, ConversationUser}
+import models.{Conversation, ConversationType, ConversationUser}
 import models.ConversationType._
 trait ConversationTable extends DatabaseComponent{
 
