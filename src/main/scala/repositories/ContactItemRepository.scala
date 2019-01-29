@@ -36,7 +36,7 @@ class ContactItemRepositoryImpl extends ContactItemRepository with MySqlComponen
     null
   }
 
-  override def find(id: String): Future[ContactItem] = {
+  override def find(id: String): Future[Option[ContactItem]] = {
     null
   }
 

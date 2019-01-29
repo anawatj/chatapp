@@ -33,7 +33,7 @@ class ContactRepositoryImpl extends ContactRepository with ContactTable with MyS
     null
   }
 
-  override def find(id: String): Future[Contact] = {
+  override def find(id: String): Future[Option[Contact]] = {
     null
   }
 

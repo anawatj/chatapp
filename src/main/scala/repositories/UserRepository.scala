@@ -44,7 +44,7 @@ class UserRepositoryImpl extends UserRepository with MySqlComponent with UserTab
     null
   }
 
-  override def find(id: String): Future[User] = {
+  override def find(id: String): Future[Option[User]] = {
     null
   }
 
