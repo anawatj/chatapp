@@ -33,5 +33,5 @@ trait ConversationUserTable extends DatabaseComponent{
         def * = (conversation_id,user_id)<>(ConversationUser.tupled,ConversationUser.unapply)
     }
 
-  val conversationUsers = TableQuery[ConversationUserTable]
+  val ConversationUsers = TableQuery[ConversationUserTable]
 }
