@@ -13,4 +13,13 @@ object JsonFormat {
   implicit val userResponseErrorDataFormat = jsonFormat1(UserResponseErrorData)
   implicit val userResponseErrorFormat = jsonFormat2(UserResponseError)
   implicit val loginRequestFormat = jsonFormat2(LoginRequest)
+
+  implicit val conversationRequestFormat = jsonFormat3(ConversationRequest)
+
+  implicit val conversationResponseDataFormat = jsonFormat3(ConversationResponseData)
+
+  implicit val conversationResponseFormat = jsonFormat2(ConversationResponse)
+
+  implicit val conversationResponseErrorDataFormat = jsonFormat1(ConversationResponseErrorData)
+  implicit val conversationResponseErrorFormat = jsonFormat2(ConversationResponseError)
 }

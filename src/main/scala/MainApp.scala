@@ -2,13 +2,13 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.stream.ActorMaterializer
-import routes.{ContactRoute, UserRoute}
+import routes.{ContactRoute, ConversationRoute, UserRoute}
 import akka.actor.ActorSystem
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
-import repositories.{ContactItemRepositoryImpl, ContactRepositoryImpl, UserRepositoryImpl}
-import services.{ContactService, UserService}
+import repositories._
+import services.{ContactService, ConversationService, UserService}
 import utils.{PasswordUtils, UUIDUtils}
 
 import scala.concurrent.Future
@@ -23,15 +23,20 @@ object MainApp  {
     val userRepository = new UserRepositoryImpl
     val contactRepository = new ContactRepositoryImpl
     val contactItemRepository = new ContactItemRepositoryImpl
+    val conversationRepository = new ConversationRepositoryImpl
+    val conversationUserRepository = new ConversationUserRepositoryImpl
     val uuidUtil = new UUIDUtils
     val passwordUtil =new PasswordUtils
     val userService = new UserService(userRepository,uuidUtil,passwordUtil)
     val contactService = new ContactService(contactRepository,contactItemRepository,uuidUtil)
+    val conversationService = new ConversationService(conversationRepository,conversationUserRepository,uuidUtil)
     val userRoute = new UserRoute(userService)
     val contactRoute = new ContactRoute(contactService)
+    val conversationRoute = new ConversationRoute(conversationService)
     val route = pathPrefix("api"/"v1"){
       contactRoute.route ~
-      userRoute.route
+      userRoute.route ~
+      conversationRoute.route
     }
 
     val (host, port) = ("0.0.0.0", 9000)

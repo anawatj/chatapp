@@ -1,5 +1,5 @@
 package services
-import json.{ConversationResponse, ConversationResponseData, ConversationResponseError, UserConversationRequest}
+import json._
 import models.{Conversation, ConversationType, ConversationUser}
 import repositories.{ConversationRepository, ConversationUserRepository}
 
@@ -12,7 +12,7 @@ import utils.UUIDUtils
 class ConversationService(conversationRepository:ConversationRepository,conversationUserRepository: ConversationUserRepository,uuidUtil: UUIDUtils) {
 
 
-    def createConversation(request:UserConversationRequest):Future[Either[ConversationResponseError,ConversationResponse]]={
+    def createConversation(request:ConversationRequest):Future[Either[ConversationResponseError,ConversationResponse]]={
         val conversation = Conversation(uuidUtil.generate(),request.conversation_name,request.`type`)
         for{
           conversationDb <- conversationRepository.add(conversation)
