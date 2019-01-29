@@ -1,11 +1,15 @@
 package models
 
-trait MessageType
+trait MessageType{
+  def toString:String
+}
 
-object TextMessageType extends MessageType
-object ImageMessageType extends MessageType
-
-case class Message(id:String,messageType:MessageType,messageData:Array[Byte],user_id:String)
+object MessageType{
+  implicit def convertToMessageType(str:String) = new MessageType {
+    override def toString: String = str
+  }
+}
+case class Message(id:String,`type`:MessageType,data:String,user_id:String)
 
 
 
