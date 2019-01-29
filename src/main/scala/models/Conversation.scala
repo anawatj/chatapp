@@ -1,17 +1,25 @@
 package models
 
 trait ConversationType{
-  override def toString: String
-
+  type  Result
+  def toRes:Result
 }
 
-object GroupConversationType extends ConversationType {
-  override def toString: String = "Group"
+object ConversationType{
+
+    implicit def convertToConversation(str:String) = new ConversationType {
+      override type Result = String
+      override def toRes: String = str
+    }
 }
 
-object UserConversationType extends ConversationType{
-  override def toString: String = "User"
-}
+
+
+
+
+
+
+
 
 case class Conversation(id:String,conversation_name:String,conversation_type:ConversationType)
 
