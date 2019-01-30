@@ -2,7 +2,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.stream.ActorMaterializer
-import routes.{ContactRoute, ConversationRoute, UserRoute}
+import routes.{ContactRoute, ConversationRoute, UserRoute, WebSocketRoute}
 import akka.actor.ActorSystem
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
@@ -33,10 +33,12 @@ object MainApp  {
     val userRoute = new UserRoute(userService)
     val contactRoute = new ContactRoute(contactService)
     val conversationRoute = new ConversationRoute(conversationService)
+    val websocketRoute = new WebSocketRoute
     val route = pathPrefix("api"/"v1"){
       contactRoute.route ~
       userRoute.route ~
-      conversationRoute.route
+      conversationRoute.route ~
+      websocketRoute.route
     }
 
     val (host, port) = ("0.0.0.0", 9000)
