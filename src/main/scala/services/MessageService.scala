@@ -36,15 +36,21 @@ class MessageService(messageRepository:MessageRepository,conversationMessageRepo
 
     def callWebSocket(messageText:String,conversation_id:String) =
     {
+
+      import akka.http.scaladsl.model.ws._
       implicit val system = ActorSystem()
       implicit val materializer = ActorMaterializer()
       import system.dispatcher
 
-      val host = s"ws://localhost:9000/api/v1/ws/$conversation_id"
+      val host = s"ws://localhost:9091/api/v1/ws/$conversation_id"
+
       println(host)
+
       val flow: Flow[akka.http.scaladsl.model.ws.Message, akka.http.scaladsl.model.ws.Message, NotUsed] =
         Flow.fromSinkAndSource(
-          Sink.foreach(println),
+          Sink.foreach {
+            case message: TextMessage.Strict => println(message.text)
+          },
           Source.single(TextMessage(messageText)))
 
       Http().singleWebSocketRequest(

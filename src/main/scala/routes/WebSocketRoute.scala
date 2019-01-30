@@ -14,13 +14,13 @@ class WebSocketRoute(implicit actorSystem: ActorSystem, actorMaterializer: Actor
   def route =
     path("ws"/Segment) {
       conversation_id=>{
-        get {
+
           val echoFlow: Flow[Message, Message, _] = Flow[Message].map {
-            case TextMessage.Strict(text) => TextMessage(s"$text!")
+            case TextMessage.Strict(text) => TextMessage(text)
             case _ => TextMessage(s"Sorry I didn't quite get that")
           }
           handleWebSocketMessages(echoFlow)
-        }
+
       }
 
     }

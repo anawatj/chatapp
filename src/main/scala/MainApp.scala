@@ -42,13 +42,22 @@ object MainApp  {
       contactRoute.route ~
       userRoute.route ~
       conversationRoute.route ~
-      messageRoute.route ~
+      messageRoute.route
+
+    }
+
+    val socketRoute = pathPrefix("api"/"v1"){
       websocketRoute.route
     }
+
+
 
     val (host, port) = ("0.0.0.0", 9000)
     val bindingFuture: Future[ServerBinding] =
       Http().bindAndHandle(route, host, port)
+
+    val socketBinding: Future[ServerBinding] =
+      Http().bindAndHandle(socketRoute, host, 9091)
   }
 
 
