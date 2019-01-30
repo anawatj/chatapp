@@ -1,7 +1,7 @@
 package mappings
 
 import databases.DatabaseComponent
-import models.{Conversation, ConversationType, ConversationUser}
+import models.{Conversation, ConversationMessage, ConversationType, ConversationUser}
 import models.ConversationType._
 trait ConversationTable extends DatabaseComponent{
 
@@ -34,4 +34,14 @@ trait ConversationUserTable extends DatabaseComponent{
     }
 
   val ConversationUsers = TableQuery[ConversationUserTable]
+}
+
+trait ConversationMessageTable extends DatabaseComponent{
+  import profile.api._
+  class ConversationMessageTable(tag:Tag) extends Table[ConversationMessage](tag,"conversation_messages"){
+    def conversation_id = column[String]("conversation_id",O.PrimaryKey)
+    def message_id = column[String]("message_id",O.PrimaryKey)
+    def * = (conversation_id,message_id)<>(ConversationMessage.tupled,ConversationMessage.unapply)
+  }
+  val ConversationMessages = TableQuery[ConversationMessageTable]
 }
