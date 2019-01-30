@@ -26,9 +26,6 @@ class ConversationUserRepositoryImpl extends ConversationUserRepository with MyS
     }
   }
 
-  override def bulkUpdate(list: List[ConversationUser]): Future[List[ConversationUser]] = {
-    null
-  }
 
   override def delete(id: String): Future[Unit] = {
     null

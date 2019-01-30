@@ -36,20 +36,23 @@ class UserRepositoryImpl extends UserRepository with MySqlComponent with UserTab
     }
   }
 
-  override def bulkUpdate(list: List[User]): Future[List[User]] = {
-    null
-  }
 
   override def delete(id: String): Future[Unit] = {
-    null
+    db.run(Users.filter(_.id===id).delete) map {
+      _ =>()
+    }
   }
 
   override def find(id: String): Future[Option[User]] = {
-    null
+    db.run(Users.filter(_.id===id).result.headOption) map{
+      user=>user
+    }
   }
 
   override def update(data: User, id: String): Future[User] = {
-    null
+    db.run(Users.filter(_.id===id).update(data)) map  {
+      _ => data
+    }
   }
 
 }

@@ -27,9 +27,6 @@ class ConversationRepositoryImpl extends ConversationRepository with MySqlCompon
     }
   }
 
-  override def bulkUpdate(list: List[Conversation]): Future[List[Conversation]] = {
-    null
-  }
 
   override def delete(id: String): Future[Unit] = {
     db.run(Conversations.filter(_.id===id).delete) map {

@@ -28,9 +28,6 @@ class ContactItemRepositoryImpl extends ContactItemRepository with MySqlComponen
 
   }
 
-  override def bulkUpdate(list: List[ContactItem]): Future[List[ContactItem]] = {
-    null
-  }
 
   override def delete(id: String): Future[Unit] = {
     null

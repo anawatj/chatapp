@@ -24,10 +24,6 @@ class ContactRepositoryImpl extends ContactRepository with ContactTable with MyS
     null
   }
 
-  override def bulkUpdate(list: List[Contact]): Future[List[Contact]] = {
-    null
-  }
-
   override def delete(id: String): Future[Unit] =
   {
     null
