@@ -2,13 +2,13 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.stream.ActorMaterializer
-import routes.{ContactRoute, ConversationRoute, UserRoute, WebSocketRoute}
+import routes._
 import akka.actor.ActorSystem
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import repositories._
-import services.{ContactService, ConversationService, UserService}
+import services.{ContactService, ConversationService, MessageService, UserService}
 import utils.{PasswordUtils, UUIDUtils}
 
 import scala.concurrent.Future
@@ -25,19 +25,24 @@ object MainApp  {
     val contactItemRepository = new ContactItemRepositoryImpl
     val conversationRepository = new ConversationRepositoryImpl
     val conversationUserRepository = new ConversationUserRepositoryImpl
+    val messageRepository = new MessageRepositoryImpl
+    val conversationMessageRepository = new ConversationMessageRepositoryImpl
     val uuidUtil = new UUIDUtils
     val passwordUtil =new PasswordUtils
     val userService = new UserService(userRepository,uuidUtil,passwordUtil)
     val contactService = new ContactService(contactRepository,contactItemRepository,uuidUtil)
     val conversationService = new ConversationService(conversationRepository,conversationUserRepository,uuidUtil)
+    val messageService = new MessageService(messageRepository,conversationMessageRepository,uuidUtil)
     val userRoute = new UserRoute(userService)
     val contactRoute = new ContactRoute(contactService)
     val conversationRoute = new ConversationRoute(conversationService)
+    val messageRoute = new MessageRoute(messageService)
     val websocketRoute = new WebSocketRoute
     val route = pathPrefix("api"/"v1"){
       contactRoute.route ~
       userRoute.route ~
       conversationRoute.route ~
+      messageRoute.route ~
       websocketRoute.route
     }
 
