@@ -8,7 +8,7 @@ libraryDependencies := Seq(
   "com.typesafe.akka" %% "akka-http"   % "10.1.6",
   "com.typesafe.akka" %% "akka-stream" % "2.5.19",
   "com.typesafe.slick" %% "slick" % "3.2.3",
-  "mysql" % "mysql-connector-java" % "5.1.16",
+  "mysql" % "mysql-connector-java" % "8.0.14",
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.1.7",
   "org.hsqldb" % "hsqldb" % "2.3.1",
   "org.mariadb.jdbc" % "mariadb-java-client" % "1.1.7",
@@ -16,10 +16,10 @@ libraryDependencies := Seq(
 )
 
 
-flywayDriver := "org.mariadb.jdbc.Driver"
-flywayUrl := "jdbc:mariadb://localhost/chatapp"
+flywayDriver := "com.mysql.cj.jdbc.Driver"
+flywayUrl := "jdbc:mysql://localhost:3306/chatapp?useSSL=false"
 flywayUser := "root"
-flywayPassword := ""
+flywayPassword := "1234"
 flywayLocations += "db/migration"
 flywayUrl in Test := "jdbc:hsqldb:file:target/flyway_sample;shutdown=true"
 flywayUser in Test := "SA"
