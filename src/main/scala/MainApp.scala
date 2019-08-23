@@ -35,7 +35,7 @@ object MainApp  {
     val conversationService = new ConversationService(conversationRepository,conversationUserRepository,uuidUtil)
     val messageService = new MessageService(messageRepository,conversationMessageRepository,uuidUtil)
     val userRoute = new UserRoute(userService)
-    val contactRoute = new ContactRoute(contactService)
+    val contactRoute = new ContactRoute(contactService,jwtUtil)
     val conversationRoute = new ConversationRoute(conversationService)
     val messageRoute = new MessageRoute(messageService)
     val websocketRoute = new WebSocketRoute
