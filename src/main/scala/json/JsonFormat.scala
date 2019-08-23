@@ -8,7 +8,7 @@ object JsonFormat {
   implicit val contactResponseErrorDataFormat = jsonFormat1(ContactResponseErrorData)
   implicit val contactResponseErrorFormat = jsonFormat2(ContactResponseError)
   implicit val userRequestFormat = jsonFormat4(UserRequest)
-  implicit val userResponseDataFormat = jsonFormat5(UserResponseData)
+  implicit val userResponseDataFormat = jsonFormat6(UserResponseData)
   implicit val userResponseFormat = jsonFormat2(UserResponse)
   implicit val userResponseErrorDataFormat = jsonFormat1(UserResponseErrorData)
   implicit val userResponseErrorFormat = jsonFormat2(UserResponseError)

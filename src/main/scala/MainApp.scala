@@ -9,7 +9,7 @@ import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import repositories._
 import services.{ContactService, ConversationService, MessageService, UserService}
-import utils.{PasswordUtils, UUIDUtils}
+import utils.{JwtUtils, PasswordUtils, UUIDUtils}
 
 import scala.concurrent.Future
 import scala.io.StdIn
@@ -29,7 +29,8 @@ object MainApp  {
     val conversationMessageRepository = new ConversationMessageRepositoryImpl
     val uuidUtil = new UUIDUtils
     val passwordUtil =new PasswordUtils
-    val userService = new UserService(userRepository,uuidUtil,passwordUtil)
+    val jwtUtil = new JwtUtils
+    val userService = new UserService(userRepository,uuidUtil,passwordUtil,jwtUtil)
     val contactService = new ContactService(contactRepository,contactItemRepository,uuidUtil)
     val conversationService = new ConversationService(conversationRepository,conversationUserRepository,uuidUtil)
     val messageService = new MessageService(messageRepository,conversationMessageRepository,uuidUtil)

@@ -12,7 +12,9 @@ libraryDependencies := Seq(
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.1.7",
   "org.hsqldb" % "hsqldb" % "2.3.1",
   "org.mariadb.jdbc" % "mariadb-java-client" % "1.1.7",
-  "com.github.t3hnar" %% "scala-bcrypt" % "3.1"
+  "com.github.t3hnar" %% "scala-bcrypt" % "3.1",
+  "com.pauldijou" %% "jwt-core" % "3.1.0",
+  "org.slf4j" % "slf4j-nop" % "1.6.4"
 )
 
 
