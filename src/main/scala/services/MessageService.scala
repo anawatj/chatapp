@@ -33,6 +33,7 @@ class MessageService(messageRepository:MessageRepository,conversationMessageRepo
           Right(MessageResponse(MessageResponseData(message.id,message.`type`.toString,message.data,conversationMessage.conversation_id,message.user_id),StatusCodes.Created.intValue))
         }
     }
+    def getMessageByConversation(conversationId:String):Future[List[Message]]=conversationMessageRepository.getMessageByConversationId(conversationId)
 
     def callWebSocket(messageText:String,conversation_id:String) =
     {

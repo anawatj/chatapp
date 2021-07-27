@@ -2,14 +2,14 @@ package repositories
 
 import databases.MySqlComponent
 import mappings.{ConversationMessageTable, ConversationTable, MessageTable}
-import models.ConversationMessage
+import models.{ConversationMessage,Message}
 
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait ConversationMessageRepository extends BaseRepository[ConversationMessage]{
-
+    def getMessageByConversationId(conversationId:String):Future[List[Message]]
 
 }
 
@@ -38,5 +38,15 @@ class ConversationMessageRepositoryImpl extends ConversationMessageRepository wi
 
   override def update(data: ConversationMessage, id: String): Future[ConversationMessage] = {
     null
+  }
+
+  override def getMessageByConversationId(conversationId: String): Future[List[Message]] = {
+    for {
+      conversationMessages <- db.run(ConversationMessages.filter(_.conversation_id===conversationId).result)
+      messageIds <- Future(conversationMessages.map(_.message_id))
+      messages <- db.run(Messages.filter(_.id.inSet(messageIds)).result)
+    } yield {
+      messages.toList
+    }
   }
 }
