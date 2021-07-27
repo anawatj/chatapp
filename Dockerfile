@@ -23,6 +23,6 @@ COPY ./build.sbt /chatapp
 COPY ./project/plugin.sbt /chatapp/project
 ADD . /chatapp
 
-EXPOSE 9000
+EXPOSE 9000 9091
 
 CMD ["bash"]
