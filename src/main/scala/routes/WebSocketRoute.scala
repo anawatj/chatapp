@@ -21,11 +21,11 @@ import scala.language.postfixOps
 
 class WebSocketRoute(messageService: MessageService)(implicit actorSystem: ActorSystem, actorMaterializer: ActorMaterializer) {
   private def echoFlow(message:String)={
-    val echoFlow: Flow[Message, Message, _] = Flow[Message].map {
+    val flow: Flow[Message, Message, _] = Flow[Message].map {
       case TextMessage.Strict(message) => TextMessage(message)
       case _ => TextMessage(s"Sorry I didn't quite get that")
     }
-    echoFlow
+    flow
 
   }
   def route = {
@@ -35,6 +35,7 @@ class WebSocketRoute(messageService: MessageService)(implicit actorSystem: Actor
         val message = data.map(list=>list.map(_.data).mkString("\n"))
         onComplete(message) {
           case Success(msg:String)=>handleWebSocketMessages(echoFlow(msg))
+          case Failure(err)=>complete(StatusCodes.InternalServerError.intValue,err.getMessage)
         }
 
       }
