@@ -21,7 +21,7 @@ libraryDependencies := Seq(
 flywayDriver := "com.mysql.cj.jdbc.Driver"
 flywayUrl := "jdbc:mysql://db_vms:3306/chatapp?allowPublicKeyRetrieval=true&useSSL=false"
 flywayUser := "tao"
-flywayPassword := "tao@1234"
+flywayPassword := "tao1234"
 flywayLocations += "db/migration"
 flywayUrl in Test := "jdbc:hsqldb:file:target/flyway_sample;shutdown=true"
 flywayUser in Test := "SA"

@@ -23,7 +23,7 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: chatapp
       MYSQL_USER: tao
-      MYSQL_PASSWORD: tao@1234
+      MYSQL_PASSWORD: tao1234
       MYSQL_PORT: 3306
       TZ: Asia/Bangkok
     ports:
