@@ -19,25 +19,16 @@ import scala.concurrent._
 import ExecutionContext.Implicits.global
 import scala.language.postfixOps
 
-class WebSocketRoute(messageService: MessageService)(implicit actorSystem: ActorSystem, actorMaterializer: ActorMaterializer) {
-  private def echoFlow(message:String)={
-    val flow: Flow[Message, Message, _] = Flow[Message].map {
-      case TextMessage.Strict(message) => TextMessage(message)
-      case _ => TextMessage(s"Sorry I didn't quite get that")
+class WebSocketRoute(implicit actorSystem: ActorSystem, actorMaterializer: ActorMaterializer) {
+  def greeter: Flow[Message, Message, Any] =
+    Flow[Message].mapConcat {
+      case tm: TextMessage =>
+        TextMessage(Source.single("Hello ")) :: Nil
     }
-    flow
-
-  }
   def route = {
     path("ws"/Segment) {
       conversation_id=>{
-        val data = messageService.getMessageByConversation(conversation_id)
-        val message = data.map(list=>list.map(_.data).mkString("\n"))
-        onComplete(message) {
-          case Success(msg:String)=>handleWebSocketMessages(echoFlow(msg))
-          case Failure(err)=>complete(StatusCodes.InternalServerError.intValue,err.getMessage)
-        }
-
+        handleWebSocketMessages(greeter)
       }
 
     }

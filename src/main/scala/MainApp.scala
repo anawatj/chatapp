@@ -38,7 +38,7 @@ object MainApp  {
     val contactRoute = new ContactRoute(contactService,jwtUtil)
     val conversationRoute = new ConversationRoute(conversationService,jwtUtil)
     val messageRoute = new MessageRoute(messageService,jwtUtil)
-    val websocketRoute = new WebSocketRoute(messageService)
+    val websocketRoute = new WebSocketRoute
     val route = pathPrefix("api"/"v1"){
       contactRoute.route ~
       userRoute.route ~
