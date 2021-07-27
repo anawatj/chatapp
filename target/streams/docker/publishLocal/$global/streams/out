@@ -1,0 +1,69 @@
+[0m[[0m[0mdebug[0m] [0m[0mExecuting Native docker build --force-rm -t chatapp:latest .[0m
+[0m[[0m[0mdebug[0m] [0m[0mWorking directory /Users/anawatjarusiripot/Documents/tao/chatapp/target/docker/stage[0m
+[0m[[0m[31merror[0m] [0m[0m#1 [internal] load build definition from Dockerfile[0m
+[0m[[0m[31merror[0m] [0m[0m#1 sha256:4a1f4eec6536ec2ba455f2f02c12a5f3fc8c2bdd27a754a43008f50bbe5a0b45[0m
+[0m[[0m[31merror[0m] [0m[0m#1 transferring dockerfile: 965B 0.0s done[0m
+[0m[[0m[31merror[0m] [0m[0m#1 DONE 0.0s[0m
+[0m[[0m[31merror[0m] [0m[0m#2 [internal] load .dockerignore[0m
+[0m[[0m[31merror[0m] [0m[0m#2 sha256:5a5a54cccb1fa1da1c5d2e7534539b4e6ae3452e1599b29eecf79eda21ff1b77[0m
+[0m[[0m[31merror[0m] [0m[0m#2 transferring context: 2B done[0m
+[0m[[0m[31merror[0m] [0m[0m#2 DONE 0.0s[0m
+[0m[[0m[31merror[0m] [0m[0m#3 [internal] load metadata for docker.io/library/openjdk:8[0m
+[0m[[0m[31merror[0m] [0m[0m#3 sha256:c1006613b124ab347fbb29ae49e2ab62add271baf34bdfe7a7a4c383ac159b76[0m
+[0m[[0m[31merror[0m] [0m[0m#3 ...[0m
+[0m[[0m[31merror[0m] [0m[0m#4 [auth] library/openjdk:pull token for registry-1.docker.io[0m
+[0m[[0m[31merror[0m] [0m[0m#4 sha256:a55c1e0ea3dccff40866d6ffb09634ab6a65f3da45e43fbcfadad670cfc6eb8c[0m
+[0m[[0m[31merror[0m] [0m[0m#4 DONE 0.0s[0m
+[0m[[0m[31merror[0m] [0m[0m#3 [internal] load metadata for docker.io/library/openjdk:8[0m
+[0m[[0m[31merror[0m] [0m[0m#3 sha256:c1006613b124ab347fbb29ae49e2ab62add271baf34bdfe7a7a4c383ac159b76[0m
+[0m[[0m[31merror[0m] [0m[0m#3 DONE 4.3s[0m
+[0m[[0m[31merror[0m] [0m[0m#5 [mainstage 1/5] FROM docker.io/library/openjdk:8@sha256:4c7bc9c7251af1d96ccfb80207576f3144994c17a3f0df3d4888a7bdb6df9de6[0m
+[0m[[0m[31merror[0m] [0m[0m#5 sha256:0e371b30d63d954b580aaede7bdca82175b1e36255e5295314c4b89d937e0c36[0m
+[0m[[0m[31merror[0m] [0m[0m#5 CACHED[0m
+[0m[[0m[31merror[0m] [0m[0m#9 [internal] load build context[0m
+[0m[[0m[31merror[0m] [0m[0m#9 sha256:fe259270e54d11a300ba06dbb93b723315d0ef638c12b7a25d97ce62f1565031[0m
+[0m[[0m[31merror[0m] [0m[0m#9 transferring context: 3.22kB done[0m
+[0m[[0m[31merror[0m] [0m[0m#9 DONE 0.0s[0m
+[0m[[0m[31merror[0m] [0m[0m#8 [stage0 2/7] WORKDIR /opt/docker[0m
+[0m[[0m[31merror[0m] [0m[0m#8 sha256:310aaeb417e47a8ee903e8dd286b151a54a8bdd338618c8657222cff24aea5a6[0m
+[0m[[0m[31merror[0m] [0m[0m#8 DONE 0.0s[0m
+[0m[[0m[31merror[0m] [0m[0m#10 [stage0 3/7] COPY 1/opt /1/opt[0m
+[0m[[0m[31merror[0m] [0m[0m#10 sha256:b946047e50419653453ac88ea515ccae636deddc38c4d81dd9b21b52fab8ebef[0m
+[0m[[0m[31merror[0m] [0m[0m#10 DONE 0.1s[0m
+[0m[[0m[31merror[0m] [0m[0m#11 [stage0 4/7] COPY 2/opt /2/opt[0m
+[0m[[0m[31merror[0m] [0m[0m#11 sha256:ba4adfc023fd015cce2041f4a0e701eecee3c6eb595307d26e8d67dea9fdae03[0m
+[0m[[0m[31merror[0m] [0m[0m#11 DONE 0.0s[0m
+[0m[[0m[31merror[0m] [0m[0m#12 [stage0 5/7] RUN ["chmod", "-R", "u=rX,g=rX", "/1/opt/docker"][0m
+[0m[[0m[31merror[0m] [0m[0m#12 sha256:670559d32777fa0c66781ab2f0dcb127784e68db9cebebdc5b2a4602dc18ab14[0m
+[0m[[0m[31merror[0m] [0m[0m#12 ...[0m
+[0m[[0m[31merror[0m] [0m[0m#6 [mainstage 2/5] RUN id -u demiourgos728 1>/dev/null 2>&1 || (( getent group 0 1>/dev/null 2>&1 || ( type groupadd 1>/dev/null 2>&1 && groupadd -g 0 root || addgroup -g 0 -S root )) && ( type useradd 1>/dev/null 2>&1 && useradd --system --create-home --uid 1001 --gid 0 demiourgos728 || adduser -S -u 1001 -G root demiourgos728 ))[0m
+[0m[[0m[31merror[0m] [0m[0m#6 sha256:e1bb379137f1894098d656a3129b9a0f89b4eaa7787f6a23c0565f9ba5ab4317[0m
+[0m[[0m[31merror[0m] [0m[0m#6 DONE 0.4s[0m
+[0m[[0m[31merror[0m] [0m[0m#7 [mainstage 3/5] WORKDIR /opt/docker[0m
+[0m[[0m[31merror[0m] [0m[0m#7 sha256:58ee999dcb624f78d4d726d32d078b540388048965d251ed18276e30bf627052[0m
+[0m[[0m[31merror[0m] [0m[0m#7 DONE 0.0s[0m
+[0m[[0m[31merror[0m] [0m[0m#12 [stage0 5/7] RUN ["chmod", "-R", "u=rX,g=rX", "/1/opt/docker"][0m
+[0m[[0m[31merror[0m] [0m[0m#12 sha256:670559d32777fa0c66781ab2f0dcb127784e68db9cebebdc5b2a4602dc18ab14[0m
+[0m[[0m[31merror[0m] [0m[0m#12 DONE 0.4s[0m
+[0m[[0m[31merror[0m] [0m[0m#13 [stage0 6/7] RUN ["chmod", "-R", "u=rX,g=rX", "/2/opt/docker"][0m
+[0m[[0m[31merror[0m] [0m[0m#13 sha256:3864acd48c642874268b29641baa3d69cc4520bf4a6283c000233322274876a5[0m
+[0m[[0m[31merror[0m] [0m[0m#13 DONE 0.3s[0m
+[0m[[0m[31merror[0m] [0m[0m#14 [stage0 7/7] RUN ["chmod", "u+x,g+x", "/1/opt/docker/bin/chatapp"][0m
+[0m[[0m[31merror[0m] [0m[0m#14 sha256:b215d9ef0c77126e94657895c7fe3b572c97361655d4e4936434549e04c57382[0m
+[0m[[0m[31merror[0m] [0m[0m#14 DONE 0.3s[0m
+[0m[[0m[31merror[0m] [0m[0m#15 [mainstage 4/5] COPY --from=stage0 --chown=demiourgos728:root /1/opt/docker /opt/docker[0m
+[0m[[0m[31merror[0m] [0m[0m#15 sha256:a07ca0c8b2ab39ecc7de4748f93d75ed704fb70e4af5378d5fbc695da4f6d5ae[0m
+[0m[[0m[31merror[0m] [0m[0m#15 DONE 0.1s[0m
+[0m[[0m[31merror[0m] [0m[0m#16 [mainstage 5/5] COPY --from=stage0 --chown=demiourgos728:root /2/opt/docker /opt/docker[0m
+[0m[[0m[31merror[0m] [0m[0m#16 sha256:8e39afd7763c06d194bde85fd8a16f9427fdbe54e17b54ef1a542edd27941b60[0m
+[0m[[0m[31merror[0m] [0m[0m#16 DONE 0.0s[0m
+[0m[[0m[31merror[0m] [0m[0m#17 exporting to image[0m
+[0m[[0m[31merror[0m] [0m[0m#17 sha256:e8c613e07b0b7ff33893b694f7759a10d42e180f2b4dc349fb57dc6b71dcab00[0m
+[0m[[0m[31merror[0m] [0m[0m#17 exporting layers[0m
+[0m[[0m[31merror[0m] [0m[0m#17 exporting layers 0.2s done[0m
+[0m[[0m[31merror[0m] [0m[0m#17 writing image sha256:bc9360f1c1f5667a584bce6544931ba5ef52e3dc5f6f6c2898b9fd92f23c2de6 done[0m
+[0m[[0m[31merror[0m] [0m[0m#17 naming to docker.io/library/chatapp:latest done[0m
+[0m[[0m[31merror[0m] [0m[0m#17 DONE 0.2s[0m
+[0m[[0m[0minfo[0m] [0m[0mRemoving intermediate image(s) (labeled "snp-multi-stage-id=029f3b8d-8796-467d-b6fb-2456e894941c") [0m
+[0m[[0m[0minfo[0m] [0m[0mTotal reclaimed space: 0B[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilt image chatapp with tags [latest][0m
