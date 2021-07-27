@@ -1,6 +1,0 @@
-[0m[[0m[33mwarn[0m] [0m[0m/Users/anawatjarusiripot/Documents/tao/chatapp/src/main/scala/services/MessageService.scala:51:24: match may not be exhaustive.[0m
-[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: Streamed(_), Streamed(_), Strict(_)[0m
-[0m[[0m[33mwarn[0m] [0m[0m          Sink.foreach {[0m
-[0m[[0m[33mwarn[0m] [0m[0m                       ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mthere were two feature warnings; re-run with -feature for details[0m
-[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
