@@ -42,14 +42,14 @@ class ContactRoute(contactService: ContactService, jwtUtils: JwtUtils)(implicit 
             }
           }
 
-        }
+        } ~
         get {
-            path("userId" / Segment) { user_id => {
+
               (headerValueByName("Authorization")){
                 header=>{
                   jwtUtils.decode(header) match {
                     case Success(auth)=>{
-                      onComplete(contactService.findByUser(user_id)) {
+                      onComplete(contactService.findByUser(auth.content)) {
                         case Success(result)=>result match {
                           case Right(res)=>complete(res.code,res)
                           case Left(res)=>complete(res.code,res)
@@ -62,7 +62,7 @@ class ContactRoute(contactService: ContactService, jwtUtils: JwtUtils)(implicit 
                   }
                 }
               }
-            }
+
           }
         }
       }
@@ -71,5 +71,5 @@ class ContactRoute(contactService: ContactService, jwtUtils: JwtUtils)(implicit 
     }
 
 
-  }
+
 }
