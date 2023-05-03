@@ -1,7 +1,6 @@
 package services
 
-import akka.http.scaladsl.model.StatusCodes
-import json.{ContactRequest, ContactResponse, ContactResponseData, ContactResponseError}
+import json.{ContactItemResponse, ContactItemResponseData, ContactItemResponseError, ContactRequest, ContactResponse, ContactResponseData, ContactResponseError}
 import models.{Contact, ContactItem}
 import repositories.{ContactItemRepository, ContactRepository}
 import utils.UUIDUtils
@@ -30,7 +29,7 @@ class ContactService(contactRepository: ContactRepository,contactItemRepository:
 
         contactItemsRet<- contactItemRepository.bulkAdd(contactItems.toList)
       } yield {
-        Right(ContactResponse(ContactResponseData(contact.id,contact.name,contact.user_id,contactItems.map(ci=>ci.user_id)),StatusCodes.OK.intValue))
+        Right(ContactResponse(ContactResponseData(contact.id,contact.name,contact.user_id,contactItems.map(ci=>ci.user_id)),200))
       }
     }
 
@@ -44,10 +43,22 @@ class ContactService(contactRepository: ContactRepository,contactItemRepository:
         })
         contactItemsDb <- contactItemRepository.bulkAdd(contactItems.toList)
       } yield {
-        Right(ContactResponse(ContactResponseData(contactDb.id, contactDb.name, contactDb.user_id, contactItemsDb.map(ci => ci.user_id).toSeq), StatusCodes.Created.intValue))
+        Right(ContactResponse(ContactResponseData(contactDb.id, contactDb.name, contactDb.user_id, contactItemsDb.map(ci => ci.user_id).toSeq), 201))
 
       }
 
+    }
+
+    def findByUser(user_id:String):Future[Either[ContactItemResponseError,ContactItemResponse]]={
+      for {
+        contactOption <- contactRepository.findByUser(user_id)
+        contactItems <- contactOption match {
+          case  Some(contact)=>contactItemRepository.getByContact(contact.id)
+          case  _ =>Future.successful(List[ContactItem]())
+        }
+      } yield  {
+        Right(ContactItemResponse(contactItems.map(contactItem=>ContactItemResponseData(contactItem.id,contactItem.contact_id,contactItem.user_id)),200))
+      }
     }
 
 

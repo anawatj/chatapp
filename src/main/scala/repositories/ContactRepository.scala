@@ -11,6 +11,7 @@ import scala.concurrent.Future
 trait ContactRepository extends BaseRepository[Contact]{
 
     def findByName(name:String):Future[Option[Contact]]
+    def findByUser(user_id:String):Future[Option[Contact]]
 }
 class ContactRepositoryImpl extends ContactRepository with ContactTable with MySqlComponent{
   import profile.api._
@@ -39,6 +40,12 @@ class ContactRepositoryImpl extends ContactRepository with ContactTable with MyS
 
   override def findByName(name: String): Future[Option[Contact]] = {
     db.run(Contacts.filter(c=>c.name===name).result.headOption) map {
+      c=>c
+    }
+  }
+
+  override def findByUser(user_id: String): Future[Option[Contact]] = {
+    db.run(Contacts.filter(c=>c.user_id===user_id).result.headOption) map {
       c=>c
     }
   }

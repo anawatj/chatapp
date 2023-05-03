@@ -14,18 +14,18 @@ import utils.JwtUtils
 
 import scala.util.{Failure, Success}
 
-class ContactRoute(contactService: ContactService,jwtUtils:JwtUtils)(implicit actorSystem: ActorSystem, actorMaterializer: ActorMaterializer) {
+class ContactRoute(contactService: ContactService, jwtUtils: JwtUtils)(implicit actorSystem: ActorSystem, actorMaterializer: ActorMaterializer) {
 
 
   def route: Route = {
     pathPrefix("contacts") {
       pathEnd {
         post {
-          (headerValueByName("Authorization")){
-            header=>{
+          (headerValueByName("Authorization")) {
+            header => {
               jwtUtils.decode(header) match {
-                case Success(auth)=>{
-                  entity(as[ContactRequest]){
+                case Success(auth) => {
+                  entity(as[ContactRequest]) {
                     request =>
                       onComplete(contactService.uploadContact(request)) {
                         case Success(result) => result match {
@@ -36,14 +36,37 @@ class ContactRoute(contactService: ContactService,jwtUtils:JwtUtils)(implicit ac
                       }
                   }
                 }
-                case Failure(ex)=>complete(StatusCodes.Unauthorized.intValue,ContactResponseError(ContactResponseErrorData(List[String](ex.getMessage)),StatusCodes.Unauthorized.intValue));
+                case Failure(ex) => complete(StatusCodes.Unauthorized.intValue, ContactResponseError(ContactResponseErrorData(List[String](ex.getMessage)), StatusCodes.Unauthorized.intValue));
               }
 
             }
           }
 
         }
+        get {
+            path("userId" / Segment) { user_id => {
+              (headerValueByName("Authorization")){
+                header=>{
+                  jwtUtils.decode(header) match {
+                    case Success(auth)=>{
+                      onComplete(contactService.findByUser(user_id)) {
+                        case Success(result)=>result match {
+                          case Right(res)=>complete(res.code,res)
+                          case Left(res)=>complete(res.code,res)
+                        }
+                        case Failure(ex)=>complete(500,ContactItemResponseError(ContactItemResponseErrorData(List[String](ex.getMessage)),500))
+                      }
+                    }
+                    case Failure(ex)=>complete(401,ContactItemResponseError(ContactItemResponseErrorData(List[String](ex.getMessage)),401))
+
+                  }
+                }
+              }
+            }
+          }
+        }
       }
+
 
     }
 

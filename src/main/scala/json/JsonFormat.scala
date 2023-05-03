@@ -30,4 +30,10 @@ object JsonFormat {
 
   implicit val messageResponseErrorDataFormat = jsonFormat1(MessageResponseErrorData)
   implicit val messageResponseErrorFormat = jsonFormat2(MessageResponseError)
+
+  implicit val contactItemResponseErrorDataFormat = jsonFormat1(ContactItemResponseErrorData)
+  implicit val contactItemResponseErrorFormat = jsonFormat2(ContactItemResponseError)
+
+  implicit val contactItemResponseDataFormat = jsonFormat3(ContactItemResponseData)
+  implicit val contactItemResponseFormat = jsonFormat2(ContactItemResponse)
 }
