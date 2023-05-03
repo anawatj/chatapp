@@ -9,7 +9,7 @@ import scala.concurrent._
 import ExecutionContext.Implicits.global
 import scala.concurrent.Future
 trait ConversationRepository extends BaseRepository[Conversation]{
-
+  def findByIds(ids:List[String]):Future[List[Conversation]]
 
 }
 
@@ -42,6 +42,13 @@ class ConversationRepositoryImpl extends ConversationRepository with MySqlCompon
 
   override def update(data: Conversation, id: String): Future[Conversation] = {
     null
+  }
+
+  override def findByIds(ids: List[String]): Future[List[Conversation]] = {
+    db.run(Conversations.filter(_.id.in(ids)).result) map {
+        conversations=>conversations
+    }
+
   }
 
 }

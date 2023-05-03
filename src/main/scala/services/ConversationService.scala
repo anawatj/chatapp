@@ -24,4 +24,13 @@ class ConversationService(conversationRepository:ConversationRepository,conversa
           Right(ConversationResponse(ConversationResponseData(conversationDb.id,conversationDb.conversation_name,conversationUsersDb.map(_.user_id)),StatusCodes.Created.intValue))
         }
     }
+    def getConversationByUser(user_id):Future[Either[ConversationResponseError,ConversationResponseList]] ={
+      for {
+        conversationUsers <- conversationUserRepository.findByUser(user_id)
+        conversations <- conversationRepository.findByIds(conversationUsers.map(_.conversation_id).toList)
+      } yield {
+        val conversationData = conversations.map(conversation=>ConversationResponseData(conversation.id,conversation.conversation_name,conversationUsers.map(conversationUser=>conversationUser.user_id)))
+        Right(ConversationResponseList(conversationData,StatusCodes.OK.intValue))
+      }
+    }
 }

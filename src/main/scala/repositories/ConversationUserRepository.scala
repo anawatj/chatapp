@@ -9,7 +9,7 @@ import ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait ConversationUserRepository extends BaseRepository [ConversationUser]{
-
+  def findByUser(user_id:String):Future[List[ConversationUser]]
 }
 class ConversationUserRepositoryImpl extends ConversationUserRepository with MySqlComponent with ConversationTable with ConversationUserTable{
   import profile.api._
@@ -17,6 +17,12 @@ class ConversationUserRepositoryImpl extends ConversationUserRepository with MyS
   override def add(data: ConversationUser): Future[ConversationUser] = {
       db.run(ConversationUsers+=data) map {
         _ => data
+      }
+  }
+
+  override def findByUser(user_id: String): Future[List[ConversationUser]] = {
+      db.run(ConversationUsers.filter(conversationUser=>conversationUser.user_id===user_id).result) map {
+        c=>c
       }
   }
 

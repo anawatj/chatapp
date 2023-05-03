@@ -19,7 +19,7 @@ object JsonFormat {
   implicit val conversationResponseDataFormat = jsonFormat3(ConversationResponseData)
 
   implicit val conversationResponseFormat = jsonFormat2(ConversationResponse)
-
+  implicit val conversationResponseListFormat = jsonFormat2(ConversationResponseList)
   implicit val conversationResponseErrorDataFormat = jsonFormat1(ConversationResponseErrorData)
   implicit val conversationResponseErrorFormat = jsonFormat2(ConversationResponseError)
 

@@ -54,10 +54,10 @@ class ContactRoute(contactService: ContactService, jwtUtils: JwtUtils)(implicit 
                           case Right(res)=>complete(res.code,res)
                           case Left(res)=>complete(res.code,res)
                         }
-                        case Failure(ex)=>complete(500,ContactItemResponseError(ContactItemResponseErrorData(List[String](ex.getMessage)),500))
+                        case Failure(ex)=>complete(StatusCodes.InternalServerError.intValue,ContactItemResponseError(ContactItemResponseErrorData(List[String](ex.getMessage)),StatusCodes.InternalServerError.intValue))
                       }
                     }
-                    case Failure(ex)=>complete(401,ContactItemResponseError(ContactItemResponseErrorData(List[String](ex.getMessage)),401))
+                    case Failure(ex)=>complete(StatusCodes.Unauthorized.intValue,ContactItemResponseError(ContactItemResponseErrorData(List[String](ex.getMessage)),StatusCodes.Unauthorized.intValue))
 
                   }
                 }

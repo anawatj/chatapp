@@ -41,7 +41,25 @@ class ConversationRoute(conversationService: ConversationService,jwtUtils:JwtUti
                   }
                 }
               }
-            }
+            }~
+              get {
+                (headerValueByName("Authorization")){
+                  header=>{
+                    jwtUtils.decode(header) match {
+                      case Success(auth)=>{
+                        onComplete(conversationService.getConversationByUser(auth.content)) {
+                          case Success(result)=> result match {
+                            case Right(res)=>complete(res.code,res)
+                            case Left(res)=>complete(res.code,res)
+                          }
+                          case Failure(ex)=>complete(StatusCodes.InternalServerError.intValue,ConversationResponseError(ConversationResponseErrorData(List[String](ex.getMessage)),StatusCodes.InternalServerError.intValue))
+                        }
+                      }
+                      case Failure(ex)=>complete(StatusCodes.Unauthorized.intValue,ConversationResponseError(ConversationResponseErrorData(List[String](ex.getMessage)),StatusCodes.Unauthorized.intValue))
+                    }
+                  }
+                }
+              }
           }
         }
     }
