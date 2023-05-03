@@ -34,7 +34,7 @@ class ConversationService(conversationRepository: ConversationRepository, conver
 
     } yield {
       val conversationData = conversations.map(conversation=>{
-        ConversationResponseData(conversation.id,conversation.conversation_name,null)
+        ConversationResponseData(conversation.id,conversation.conversation_name,Seq[String]())
       })
       Right(ConversationResponseList(conversationData, StatusCodes.OK.intValue))
     }
