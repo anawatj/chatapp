@@ -22,7 +22,7 @@ class ConversationUserRepositoryImpl extends ConversationUserRepository with MyS
 
   override def findByUser(user_id: String): Future[List[ConversationUser]] = {
       db.run(ConversationUsers.filter(conversationUser=>conversationUser.user_id===user_id).result) map {
-        c=>c
+        c=>c.toList
       }
   }
 

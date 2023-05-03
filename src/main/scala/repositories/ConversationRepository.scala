@@ -45,8 +45,8 @@ class ConversationRepositoryImpl extends ConversationRepository with MySqlCompon
   }
 
   override def findByIds(ids: List[String]): Future[List[Conversation]] = {
-    db.run(Conversations.filter(_.id.in(ids)).result) map {
-        conversations=>conversations
+    db.run(Conversations.filter(_.id.inSet(ids.toSeq)).result) map {
+        conversations=>conversations.toList
     }
 
   }

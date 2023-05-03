@@ -24,7 +24,7 @@ class ConversationService(conversationRepository:ConversationRepository,conversa
           Right(ConversationResponse(ConversationResponseData(conversationDb.id,conversationDb.conversation_name,conversationUsersDb.map(_.user_id)),StatusCodes.Created.intValue))
         }
     }
-    def getConversationByUser(user_id):Future[Either[ConversationResponseError,ConversationResponseList]] ={
+    def getConversationByUser(user_id:String):Future[Either[ConversationResponseError,ConversationResponseList]] ={
       for {
         conversationUsers <- conversationUserRepository.findByUser(user_id)
         conversations <- conversationRepository.findByIds(conversationUsers.map(_.conversation_id).toList)
