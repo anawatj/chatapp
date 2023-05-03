@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chatapp_8981.iml" filepath="$PROJECT_DIR$/.idea/modules/chatapp_8981.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chatapp_8981-build.iml" filepath="$PROJECT_DIR$/.idea/modules/chatapp_8981-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chatapp.iml" filepath="$PROJECT_DIR$/.idea/modules/chatapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chatapp-build.iml" filepath="$PROJECT_DIR$/.idea/modules/chatapp-build.iml" />
     </modules>
   </component>
 </project>

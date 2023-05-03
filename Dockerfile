@@ -10,7 +10,7 @@ RUN \
 # Any RUN command after an ARG is set has that value in it as an environment variable and thus
 # invalidates layer cache, so only declaring these ARGs when they're used
 #https://github.com/sbt/sbt/releases/download/v1.2.8/sbt-1.2.8.tgz
-ARG SBT_VERSION="1.7.1"
+ARG SBT_VERSION="1.2.8"
 RUN \
   curl -L "https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz" | tar zxf - -C /usr/share  && \
   cd /usr/share/sbt/bin && \
