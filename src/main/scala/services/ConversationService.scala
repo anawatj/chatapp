@@ -31,10 +31,10 @@ class ConversationService(conversationRepository: ConversationRepository, conver
     for {
       conversationUsers <- conversationUserRepository.findByUser(user_id)
       conversations <- conversationRepository.findByIds(conversationUsers.map(_.conversation_id).toList)
-
+      users <- conversationUserRepository.findByConversationIds(conversations.map(_.id).toList)
     } yield {
       val conversationData = conversations.map(conversation=>{
-        ConversationResponseData(conversation.id,conversation.conversation_name,Seq[String]())
+        ConversationResponseData(conversation.id,conversation.conversation_name,users.filter(user=>user.conversation_id==conversation.id).map(_.user_id).toSeq)
       })
       Right(ConversationResponseList(conversationData, StatusCodes.OK.intValue))
     }

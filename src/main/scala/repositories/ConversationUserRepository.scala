@@ -11,6 +11,7 @@ import scala.concurrent.Future
 trait ConversationUserRepository extends BaseRepository [ConversationUser]{
   def findByUser(user_id:String):Future[List[ConversationUser]]
   def findByConversationId(conversation_id:String):Future[List[ConversationUser]]
+  def findByConversationIds(conversation_ids:List[String]):Future[List[ConversationUser]]
 }
 class ConversationUserRepositoryImpl extends ConversationUserRepository with MySqlComponent with ConversationTable with ConversationUserTable{
   import profile.api._
@@ -30,6 +31,12 @@ class ConversationUserRepositoryImpl extends ConversationUserRepository with MyS
   override def findByConversationId(conversation_id: String): Future[List[ConversationUser]] = {
 
     db.run(ConversationUsers.filter(conversationUser=>conversationUser.conversation_id===conversation_id).result) map {
+      c=>c.toList
+    }
+  }
+
+  override def findByConversationIds(conversation_ids: List[String]): Future[List[ConversationUser]] = {
+    db.run(ConversationUsers.filter(conversationUser=>conversationUser.conversation_id.inSet(conversation_ids.toSeq)).result) map {
       c=>c.toList
     }
   }
