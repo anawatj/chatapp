@@ -39,4 +39,15 @@ class ConversationService(conversationRepository: ConversationRepository, conver
       Right(ConversationResponseList(conversationData, StatusCodes.OK.intValue))
     }
   }
+  def getConversationDetail(converesation_id: String):Future[Either[ConversationResponseError,ConversationResponse]]={
+    for {
+      conversationOption <- conversationRepository.find(converesation_id)
+      conversationUsers <- conversationUserRepository.findByConversationId(converesation_id)
+    } yield  {
+      conversationOption match {
+         case Some(conversation)=>Right(ConversationResponse(ConversationResponseData(conversation.id,conversation.conversation_name,conversationUsers.map(_.user_id).toSeq),StatusCodes.OK.intValue))
+         case None => Left(ConversationResponseError(ConversationResponseErrorData(List[String]("Not Found Conversation")),StatusCodes.NotFound.intValue))
+       }
+    }
+  }
 }
