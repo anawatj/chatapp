@@ -2,7 +2,7 @@ package services
 
 import json._
 import models.{Conversation, ConversationType, ConversationUser}
-import repositories.{ConversationRepository, ConversationUserRepository}
+import repositories.{ConversationRepository, ConversationUserRepository,ConversationMessageRepository}
 
 import scala.concurrent._
 import ExecutionContext.Implicits.global
@@ -11,7 +11,7 @@ import ConversationType._
 import akka.http.scaladsl.model.StatusCodes
 import utils.UUIDUtils
 
-class ConversationService(conversationRepository: ConversationRepository, conversationUserRepository: ConversationUserRepository, uuidUtil: UUIDUtils) {
+class ConversationService(conversationRepository: ConversationRepository, conversationUserRepository: ConversationUserRepository, uuidUtil: UUIDUtils,conversationMessageRepository: ConversationMessageRepository) {
 
 
   def createConversation(request: ConversationRequest): Future[Either[ConversationResponseError, ConversationResponse]] = {
@@ -39,13 +39,14 @@ class ConversationService(conversationRepository: ConversationRepository, conver
       Right(ConversationResponseList(conversationData, StatusCodes.OK.intValue))
     }
   }
-  def getConversationDetail(converesation_id: String):Future[Either[ConversationResponseError,ConversationResponse]]={
+  def getConversationDetail(converesation_id: String):Future[Either[ConversationResponseError,ConversationDetailResponse]]={
     for {
       conversationOption <- conversationRepository.find(converesation_id)
       conversationUsers <- conversationUserRepository.findByConversationId(converesation_id)
+      conversationMessages <- conversationMessageRepository.findByConversationId(converesation_id)
     } yield  {
       conversationOption match {
-         case Some(conversation)=>Right(ConversationResponse(ConversationResponseData(conversation.id,conversation.conversation_name,conversationUsers.map(_.user_id).toSeq),StatusCodes.OK.intValue))
+         case Some(conversation)=>Right(ConversationDetailResponse(ConversationDetailResponseData(conversation.id,conversation.conversation_name,conversationUsers.map(_.user_id).toSeq,conversationMessages.map(_.message_id).toSeq),StatusCodes.OK.intValue))
          case None => Left(ConversationResponseError(ConversationResponseErrorData(List[String]("Not Found Conversation")),StatusCodes.NotFound.intValue))
        }
     }

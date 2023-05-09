@@ -32,7 +32,7 @@ object MainApp  {
     val jwtUtil = new JwtUtils
     val userService = new UserService(userRepository,uuidUtil,passwordUtil,jwtUtil)
     val contactService = new ContactService(contactRepository,contactItemRepository,uuidUtil)
-    val conversationService = new ConversationService(conversationRepository,conversationUserRepository,uuidUtil)
+    val conversationService = new ConversationService(conversationRepository,conversationUserRepository,uuidUtil,conversationMessageRepository)
     val messageService = new MessageService(messageRepository,conversationMessageRepository,uuidUtil)
     val userRoute = new UserRoute(userService)
     val contactRoute = new ContactRoute(contactService,jwtUtil)

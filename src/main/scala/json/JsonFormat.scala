@@ -36,4 +36,7 @@ object JsonFormat {
 
   implicit val contactItemResponseDataFormat = jsonFormat3(ContactItemResponseData)
   implicit val contactItemResponseFormat = jsonFormat2(ContactItemResponse)
+
+  implicit val conversationDetailResponseDataFormat=jsonFormat4(ConversationDetailResponseData)
+  implicit val conversationDetailResponseFormat=jsonFormat2(ConversationDetailResponse)
 }
